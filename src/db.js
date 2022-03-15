@@ -4,7 +4,7 @@ const id = "36829d701ab35548816a";
 const endpoint = `https://krat.es/${id}`;
 
 export async function get(collection) {
-  return axios.get(`${endpoint}${collection}`);
+  return axios.get(`${endpoint}${collection}?limit=1000`);
 }
 
 export async function create(collection, item) {
