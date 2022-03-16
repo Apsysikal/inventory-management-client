@@ -7,18 +7,8 @@ export class Server {
   constructor(app: Express) {
     this.app = app;
 
-    this.app.use(
-      express.static(path.resolve(__dirname + "/../public/frontend/"))
-    );
-
     this.app.get("/api", (req: Request, res: Response): void => {
       res.end("You have reached the api endpoint");
-    });
-
-    this.app.get("*", (req: Request, res: Response): void => {
-      res.sendFile(
-        path.resolve(__dirname + "/../public/frontend/build/index.html")
-      );
     });
   }
 
