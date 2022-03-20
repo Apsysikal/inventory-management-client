@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material";
+
 import { Breakpoint } from "@mui/material";
 
 import Container from "@mui/material/Container";
@@ -12,6 +13,7 @@ import TextField from "@mui/material/TextField";
 
 import CssBaseline from "@mui/material/CssBaseline";
 
+import theme from "./components/Theme";
 import Header from "./components/Header";
 import CheckOutDialog from "./components/CheckOutDialog";
 import CheckInDialog from "./components/CheckInDialog";
@@ -21,24 +23,6 @@ import { get, modify } from "./db";
 import InventoryItem from "./types/InventoryItem";
 
 const rows: Array<InventoryItem> = [];
-
-const theme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#70BD95",
-      dark: "#408c67",
-      light: "#a1f0c6",
-      contrastText: "#000",
-    },
-    secondary: {
-      main: "#002439",
-      dark: "#002439",
-      light: "#000014",
-      contrastText: "#fff",
-    },
-  },
-});
 
 export default function App() {
   const [listItems, setListItems] = React.useState(rows);
