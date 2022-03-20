@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
@@ -17,6 +18,8 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
+  const navigate = useNavigate();
+
   return (
     <>
       <AppBar position="static" sx={props.sx}>
@@ -34,7 +37,14 @@ export default function Header(props: HeaderProps) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {props.titleText}
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>

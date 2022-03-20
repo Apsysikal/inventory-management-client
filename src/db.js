@@ -1,7 +1,7 @@
 import * as axios from "axios";
 
 const id = "36829d701ab35548816a";
-const endpoint = `https://krat.es/${id}`;
+const endpoint = `http://localhost:3001/${id}`;
 
 export async function get(collection) {
   return axios.get(`${endpoint}${collection}?limit=1000`);

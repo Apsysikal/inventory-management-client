@@ -12,10 +12,10 @@ import TextField from "@mui/material/TextField";
 
 import CssBaseline from "@mui/material/CssBaseline";
 
-import Header from "./Components/Header";
-import CheckOutDialog from "./Components/CheckOutDialog";
-import CheckInDialog from "./Components/CheckInDialog";
-import ItemTable from "./Components/ItemTable";
+import Header from "./components/Header";
+import CheckOutDialog from "./components/CheckOutDialog";
+import CheckInDialog from "./components/CheckInDialog";
+import ItemTable from "./components/ItemTable";
 
 import { get, modify } from "./db";
 import InventoryItem from "./types/InventoryItem";
