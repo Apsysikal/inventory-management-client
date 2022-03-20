@@ -1,7 +1,17 @@
 import * as axios from "axios";
 
-const id = "36829d701ab35548816a";
-const endpoint = `http://localhost:3001/${id}`;
+if (!process.env.REACT_APP_DB_URI) {
+  throw new Error("REACT_APP_DB_URI environment variable not set");
+}
+
+if (!process.env.REACT_APP_DB_ID) {
+  throw new Error("REACT_APP_DB_ID environment variable not set");
+}
+
+const uri = String(process.env.REACT_APP_DB_URI);
+const id = String(process.env.REACT_APP_DB_ID);
+
+const endpoint = `${uri}/${id}`;
 
 export async function get(collection) {
   return axios.get(`${endpoint}${collection}?limit=1000`);
