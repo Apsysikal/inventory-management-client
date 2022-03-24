@@ -29,7 +29,7 @@ export default function App() {
   const [searchText, setSearchText] = React.useState("");
 
   React.useEffect(() => {
-    get("/items")
+    get("/item")
       .then((response) => {
         // @ts-nocheck
         setListItems([...response.data]);
@@ -53,7 +53,7 @@ export default function App() {
 
       updatedListItems[index].count += item.count;
 
-      modify("/items", updatedListItems[index])
+      modify("/item", updatedListItems[index])
         .then(console.debug)
         .catch(console.debug);
     });
@@ -71,7 +71,7 @@ export default function App() {
 
       updatedListItems[index].count -= item.count;
 
-      modify("/items", updatedListItems[index])
+      modify("/item", updatedListItems[index])
         .then(console.debug)
         .catch(console.debug);
     });
