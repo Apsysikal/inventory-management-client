@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import theme from "./components/Theme";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import CheckOutDialog from "./components/CheckOutDialog";
 import CheckInDialog from "./components/CheckInDialog";
 import ItemTable from "./components/ItemTable";
