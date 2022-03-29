@@ -11,10 +11,9 @@ services:
       - ..:/workspace
     command: sleep infinity
     networks:
-      - backend
+      - frontend
 
   db:
-    container_name: db
     restart: unless-stopped
     image: mongo
     volumes:
@@ -22,15 +21,15 @@ services:
     networks:
       - backend
 
-  jsonbox:
-    container_name: jsonbox
-    restart: always
+  backend:
+    restart: unless-stopped
     environment:
-      - MONGODB_URI=mongodb://db:27017/jsonbox-io-dev
-    image: harlev/jsonbox
+      - MONGODB_URI=mongodb://db:27017/item
+    image: caserage/inventory-management-server
     ports:
       - 3001:3000
     networks:
+      - frontend
       - backend
     depends_on:
       - db
@@ -39,5 +38,7 @@ volumes:
   mongo_data:
 
 networks:
+  frontend:
+    driver: bridge
   backend:
     driver: bridge
