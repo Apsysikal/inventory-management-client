@@ -3,4 +3,5 @@ export default interface InventoryItem {
   serial: string;
   description: string;
   count: number;
+  checked?: boolean;
 }

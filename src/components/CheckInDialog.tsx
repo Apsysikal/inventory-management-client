@@ -21,23 +21,36 @@ interface CheckInDialogProps {
 }
 
 export default function CheckInDialog(props: CheckInDialogProps) {
-  const items = props.listItems;
-  const checkInItems: Array<InventoryItem> = [];
   const parentCallback = props.callback;
 
+  const [items, setItems] = React.useState<Array<InventoryItem>>([]);
   const [open, setOpen] = React.useState(false);
   const [searchText, setSearchText] = React.useState("");
 
   const handleClickOpen = () => {
+    const clearedItems = props.listItems.map((item) => {
+      return {
+        ...item,
+        checked: false,
+        count: 0,
+      };
+    });
+
+    setItems([...clearedItems]);
     setOpen(true);
   };
 
   const handleCancel = () => {
+    setItems([]);
     setOpen(false);
   };
 
   const handleAccept = () => {
-    parentCallback(checkInItems);
+    const selectedItems = items.filter((item) => {
+      return item.checked;
+    });
+
+    parentCallback(selectedItems);
     setOpen(false);
   };
 
@@ -48,15 +61,14 @@ export default function CheckInDialog(props: CheckInDialogProps) {
   };
 
   const handleItemChange = (changedItem: InventoryItem) => {
-    const index = checkInItems.findIndex((item) => {
-      return item.serial === changedItem.serial;
+    const updatedItems = items;
+
+    const index = updatedItems.findIndex((item) => {
+      return item._id === changedItem._id;
     });
 
-    if (index === -1) {
-      checkInItems.push(changedItem);
-    } else {
-      checkInItems[index] = changedItem;
-    }
+    updatedItems[index] = changedItem;
+    setItems([...updatedItems]);
   };
 
   const searchPredicate = (element: InventoryItem) => {

@@ -24,10 +24,10 @@ export default function CheckInDialogListItem(
 
   const [item, setItem] = React.useState({
     _id: props.item._id,
-    checked: false,
+    checked: props.item.checked || false,
     serial: props.item.serial,
     description: props.item.description,
-    count: 0,
+    count: props.item.count,
   });
 
   const handleAddClick = () => {
