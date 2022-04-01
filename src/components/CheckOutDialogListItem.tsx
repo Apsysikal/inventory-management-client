@@ -1,15 +1,12 @@
 import React from "react";
-
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-
 import RemoveIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import AddIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-
 import InventoryItem from "../types/InventoryItem";
 
 interface CheckOutDialogListItemProps {
@@ -23,11 +20,12 @@ export default function CheckOutDialogListItem(
   const onItemChangeCallback = props.onItemChangeCallback;
 
   const [item, setItem] = React.useState({
-    checked: false,
+    _id: props.item._id,
+    checked: props.item.checked,
     serial: props.item.serial,
     description: props.item.description,
-    count: 0,
-    maxCount: props.item.count,
+    count: props.item.count,
+    maxCount: props.item.maxCount,
   });
 
   const handleAddClick = () => {
