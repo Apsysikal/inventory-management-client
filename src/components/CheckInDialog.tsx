@@ -1,5 +1,4 @@
 import React from "react";
-
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,11 +7,8 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import TextField from "@mui/material/TextField";
-
 import LogInIcon from "@mui/icons-material/LoginOutlined";
-
 import InventoryItem from "../types/InventoryItem";
-
 import CheckInDialogListItem from "./CheckInDialogListItem";
 
 interface CheckInDialogProps {
@@ -20,23 +16,27 @@ interface CheckInDialogProps {
   callback: Function;
 }
 
-export default function CheckInDialog(props: CheckInDialogProps) {
-  const parentCallback = props.callback;
+function resetItemsForDialog(items: Array<InventoryItem>) {
+  const modifiedItems = items.map((item) => {
+    return {
+      ...item,
+      checked: false,
+      count: 0,
+    };
+  });
 
+  return modifiedItems;
+}
+
+export default function CheckInDialog(props: CheckInDialogProps) {
   const [items, setItems] = React.useState<Array<InventoryItem>>([]);
   const [open, setOpen] = React.useState(false);
   const [searchText, setSearchText] = React.useState("");
+  const parentCallback = props.callback;
 
   const handleClickOpen = () => {
-    const clearedItems = props.listItems.map((item) => {
-      return {
-        ...item,
-        checked: false,
-        count: 0,
-      };
-    });
-
-    setItems([...clearedItems]);
+    const dialogItems = resetItemsForDialog(props.listItems);
+    setItems([...dialogItems]);
     setOpen(true);
   };
 
@@ -51,6 +51,7 @@ export default function CheckInDialog(props: CheckInDialogProps) {
     });
 
     parentCallback(selectedItems);
+    setItems([]);
     setOpen(false);
   };
 

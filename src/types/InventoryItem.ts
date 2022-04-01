@@ -4,4 +4,5 @@ export default interface InventoryItem {
   description: string;
   count: number;
   checked?: boolean;
+  maxCount?: number;
 }
