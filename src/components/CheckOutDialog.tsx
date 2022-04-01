@@ -1,18 +1,13 @@
 import React from "react";
-
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import List from "@mui/material/List";
-import ListSubheader from "@mui/material/ListSubheader";
 import TextField from "@mui/material/TextField";
-
 import LogOutIcon from "@mui/icons-material/LogoutOutlined";
-
 import CheckOutDialogListItem from "./CheckOutDialogListItem";
-
 import InventoryItem from "../types/InventoryItem";
 
 interface CheckOutDialogProps {
@@ -20,36 +15,54 @@ interface CheckOutDialogProps {
   callback: Function;
 }
 
-export default function CheckOutDialog(props: CheckOutDialogProps) {
-  const items = props.listItems;
-  const checkOutItems: Array<InventoryItem> = [];
-  const onCheckOutCallback = props.callback;
+function resetItemsForDialog(items: Array<InventoryItem>) {
+  const modifiedItems = items.map((item) => {
+    return {
+      ...item,
+      checked: false,
+      maxCount: item.count,
+      count: 0,
+    };
+  });
 
+  return modifiedItems;
+}
+
+export default function CheckOutDialog(props: CheckOutDialogProps) {
+  const [items, setItems] = React.useState<Array<InventoryItem>>([]);
   const [open, setOpen] = React.useState(false);
   const [searchText, setSearchText] = React.useState("");
+  const onCheckOutCallback = props.callback;
 
   const handleOpen = () => {
+    const dialogItems = resetItemsForDialog(props.listItems);
+    setItems([...dialogItems]);
     setOpen(true);
   };
 
   const handleClose = () => {
+    setItems([]);
     setOpen(false);
   };
 
   const handleItemChange = (changedItem: InventoryItem) => {
-    const index = checkOutItems.findIndex((item) => {
-      return item.serial === changedItem.serial;
+    const updatedItems = items;
+
+    const index = updatedItems.findIndex((item) => {
+      return item._id === changedItem._id;
     });
 
-    if (index === -1) {
-      checkOutItems.push(changedItem);
-    } else {
-      checkOutItems[index] = changedItem;
-    }
+    updatedItems[index] = changedItem;
+    setItems([...updatedItems]);
   };
 
   const handleAccept = () => {
-    onCheckOutCallback(checkOutItems);
+    const selectedItems = items.filter((item) => {
+      return item.checked;
+    });
+
+    onCheckOutCallback(selectedItems);
+    setItems([]);
     setOpen(false);
   };
 
@@ -67,7 +80,7 @@ export default function CheckOutDialog(props: CheckOutDialogProps) {
 
     return (
       (description.includes(search) || serial.includes(search)) &&
-      element.count > 0
+      (element.maxCount || 0) > 0
     );
   };
 
@@ -85,15 +98,13 @@ export default function CheckOutDialog(props: CheckOutDialogProps) {
         <DialogTitle>Material Auslagern</DialogTitle>
         <DialogContent>
           <List>
-            <ListSubheader>
-              <TextField
-                onChange={handleSearchChange}
-                variant="standard"
-                fullWidth
-                label="Suchbegriff"
-                value={searchText}
-              ></TextField>
-            </ListSubheader>
+            <TextField
+              onChange={handleSearchChange}
+              variant="standard"
+              fullWidth
+              label="Suchbegriff"
+              value={searchText}
+            ></TextField>
             {items.filter(searchPredicate).map((item) => (
               <CheckOutDialogListItem
                 key={item.serial}
