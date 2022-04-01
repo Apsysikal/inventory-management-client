@@ -5,7 +5,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import ListSubheader from "@mui/material/ListSubheader";
 import TextField from "@mui/material/TextField";
 import LogInIcon from "@mui/icons-material/LoginOutlined";
 import InventoryItem from "../types/InventoryItem";
@@ -95,15 +94,13 @@ export default function CheckInDialog(props: CheckInDialogProps) {
         <DialogTitle>Material Einlagern</DialogTitle>
         <DialogContent>
           <List>
-            <ListSubheader>
-              <TextField
-                onChange={handleSearchChange}
-                variant="standard"
-                fullWidth
-                label="Suchbegriff"
-                value={searchText}
-              ></TextField>
-            </ListSubheader>
+            <TextField
+              onChange={handleSearchChange}
+              variant="standard"
+              fullWidth
+              label="Suchbegriff"
+              value={searchText}
+            ></TextField>
             {items.filter(searchPredicate).map((item: InventoryItem) => (
               <CheckInDialogListItem
                 key={item.serial}

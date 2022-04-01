@@ -5,7 +5,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import List from "@mui/material/List";
-import ListSubheader from "@mui/material/ListSubheader";
 import TextField from "@mui/material/TextField";
 import LogOutIcon from "@mui/icons-material/LogoutOutlined";
 import CheckOutDialogListItem from "./CheckOutDialogListItem";
@@ -99,15 +98,13 @@ export default function CheckOutDialog(props: CheckOutDialogProps) {
         <DialogTitle>Material Auslagern</DialogTitle>
         <DialogContent>
           <List>
-            <ListSubheader>
-              <TextField
-                onChange={handleSearchChange}
-                variant="standard"
-                fullWidth
-                label="Suchbegriff"
-                value={searchText}
-              ></TextField>
-            </ListSubheader>
+            <TextField
+              onChange={handleSearchChange}
+              variant="standard"
+              fullWidth
+              label="Suchbegriff"
+              value={searchText}
+            ></TextField>
             {items.filter(searchPredicate).map((item) => (
               <CheckOutDialogListItem
                 key={item.serial}
