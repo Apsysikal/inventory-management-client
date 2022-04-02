@@ -7,8 +7,8 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import LogInIcon from "@mui/icons-material/LoginOutlined";
-import InventoryItem from "../types/InventoryItem";
-import CheckInDialogListItem from "./CheckInDialogListItem";
+import InventoryItem from "../../types/InventoryItem";
+import CheckInDialogListItem from "../CheckInDialogListItem";
 
 interface CheckInDialogProps {
   listItems: Array<InventoryItem>;
