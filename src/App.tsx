@@ -15,7 +15,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import theme from "./components/Theme";
 import Header from "./components/Header/Header";
-import CheckOutDialog from "./components/CheckOutDialog";
+import CheckOutDialog from "./components/CheckOutDialog/CheckOutDialog";
 import CheckInDialog from "./components/CheckInDialog/CheckInDialog";
 import ItemTable from "./components/ItemTable";
 

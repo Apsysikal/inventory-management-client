@@ -7,8 +7,8 @@ import DialogActions from "@mui/material/DialogActions";
 import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import LogOutIcon from "@mui/icons-material/LogoutOutlined";
-import CheckOutDialogListItem from "./CheckOutDialogListItem";
-import InventoryItem from "../types/InventoryItem";
+import CheckOutDialogListItem from "../CheckOutDialogListItem/CheckOutDialogListItem";
+import InventoryItem from "../../types/InventoryItem";
 
 interface CheckOutDialogProps {
   listItems: Array<InventoryItem>;
