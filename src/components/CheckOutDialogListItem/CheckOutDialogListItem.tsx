@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import RemoveIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import AddIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import InventoryItem from "../types/InventoryItem";
+import InventoryItem from "../../types/InventoryItem";
 
 interface CheckOutDialogListItemProps {
   item: InventoryItem;
@@ -21,7 +21,7 @@ export default function CheckOutDialogListItem(
 
   const [item, setItem] = React.useState({
     _id: props.item._id,
-    checked: props.item.checked,
+    checked: props.item.checked || false,
     serial: props.item.serial,
     description: props.item.description,
     count: props.item.count,
@@ -95,6 +95,7 @@ export default function CheckOutDialogListItem(
       <IconButton
         onClick={handleRemoveClick}
         disabled={item.count === 0 ? true : false}
+        aria-label="remove"
       >
         <RemoveIcon />
       </IconButton>
@@ -102,6 +103,7 @@ export default function CheckOutDialogListItem(
       <IconButton
         onClick={handleAddClick}
         disabled={item.count === item.maxCount ? true : false}
+        aria-label="add"
       >
         <AddIcon />
       </IconButton>

@@ -1,24 +1,16 @@
 import * as React from "react";
-
 import { ThemeProvider } from "@mui/material";
-
 import { Breakpoint } from "@mui/material";
-
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
 import Box from "@mui/material/Box";
-
 import TextField from "@mui/material/TextField";
-
 import CssBaseline from "@mui/material/CssBaseline";
-
-import theme from "./components/Theme";
+import theme from "./components/Theme/Theme";
 import Header from "./components/Header/Header";
-import CheckOutDialog from "./components/CheckOutDialog";
-import CheckInDialog from "./components/CheckInDialog";
-import ItemTable from "./components/ItemTable";
-
+import CheckOutDialog from "./components/CheckOutDialog/CheckOutDialog";
+import CheckInDialog from "./components/CheckInDialog/CheckInDialog";
+import ItemTable from "./components/ItemTable/ItemTable";
 import { get, modify } from "./db";
 import InventoryItem from "./types/InventoryItem";
 

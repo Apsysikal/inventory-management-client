@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 
-import InventoryItem from "../types/InventoryItem";
+import InventoryItem from "../../types/InventoryItem";
 
 interface ItemTableProps {
   listItems: Array<InventoryItem>;

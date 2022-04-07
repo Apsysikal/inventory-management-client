@@ -1,16 +1,13 @@
 import React from "react";
-
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import IconButton from "@mui/material/IconButton";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
-
 import AddIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import RemoveIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
-
-import InventoryItem from "../types/InventoryItem";
+import InventoryItem from "../../types/InventoryItem";
 
 interface CheckInDialogListItemProps {
   item: InventoryItem;
@@ -93,11 +90,12 @@ export default function CheckInDialogListItem(
       <IconButton
         onClick={handleRemoveClick}
         disabled={item.count === 0 ? true : false}
+        aria-label="remove"
       >
         <RemoveIcon />
       </IconButton>
       <Typography>{item.count}</Typography>
-      <IconButton onClick={handleAddClick}>
+      <IconButton onClick={handleAddClick} aria-label="add">
         <AddIcon />
       </IconButton>
     </ListItem>
