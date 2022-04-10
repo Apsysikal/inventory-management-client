@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { Breakpoint } from "@mui/material";
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 
 interface HeaderProps {
   sx?: object;
@@ -16,7 +16,13 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const navigate = useNavigate();
+  const {instance} = useMsal();
+  const isAuthenticated = useIsAuthenticated();
+
+  const handleLogin = async () => {
+    const result = await instance.loginPopup();
+    console.log(result);
+  }
 
   return (
     <>
@@ -35,11 +41,10 @@ export default function Header(props: HeaderProps) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {props.titleText}
             </Typography>
+            {isAuthenticated ? "Logged in" : "Nope"}
             <Button
               color="inherit"
-              onClick={() => {
-                navigate("/login");
-              }}
+              onClick={handleLogin}
             >
               Login
             </Button>
