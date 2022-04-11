@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import LogInIcon from "@mui/icons-material/LoginOutlined";
 import InventoryItem from "../../types/InventoryItem";
 import CheckInDialogListItem from "../CheckInDialogListItem/CheckInDialogListItem";
+import { useIsAuthenticated } from "@azure/msal-react";
 
 interface CheckInDialogProps {
   listItems: Array<InventoryItem>;
@@ -87,6 +88,7 @@ export default function CheckInDialog(props: CheckInDialogProps) {
         variant="contained"
         fullWidth
         startIcon={<LogInIcon />}
+        disabled={!useIsAuthenticated()}
       >
         Material Einlagern
       </Button>

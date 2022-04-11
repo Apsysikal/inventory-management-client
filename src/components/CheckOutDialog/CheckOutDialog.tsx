@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import LogOutIcon from "@mui/icons-material/LogoutOutlined";
 import CheckOutDialogListItem from "../CheckOutDialogListItem/CheckOutDialogListItem";
 import InventoryItem from "../../types/InventoryItem";
+import { useIsAuthenticated } from "@azure/msal-react";
 
 interface CheckOutDialogProps {
   listItems: Array<InventoryItem>;
@@ -91,6 +92,7 @@ export default function CheckOutDialog(props: CheckOutDialogProps) {
         variant="contained"
         fullWidth
         startIcon={<LogOutIcon />}
+        disabled={!useIsAuthenticated()}
       >
         Material Auslagern
       </Button>

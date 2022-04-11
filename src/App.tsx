@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./components/Theme/Theme";
 import Header from "./components/Header/Header";
 import pca from "./config/msal";
-import {MsalProvider} from "@azure/msal-react"
+import { MsalProvider } from "@azure/msal-react";
 import Home from "./pages/Home";
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
           maxWidth={"md" as Breakpoint}
           titleText="Inventar"
         />
-      <Home />
+        <Home />
       </ThemeProvider>
     </MsalProvider>
   );
