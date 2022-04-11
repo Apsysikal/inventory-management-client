@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import CheckOutDialog from "./CheckOutDialog";
 import InventoryItem from "../../types/InventoryItem";
+import { useIsAuthenticated } from "@azure/msal-react";
 
 const baseListItems: Array<InventoryItem> = [
   {
@@ -28,6 +29,13 @@ const baseProps: ComponentProps<typeof CheckOutDialog> = {
   listItems: baseListItems,
   callback: baseCallback,
 };
+
+jest.mock("@azure/msal-react");
+
+beforeEach(() => {
+  // @ts-ignore
+  useIsAuthenticated.mockReturnValue(true);
+});
 
 describe("<CheckOutDialog />", () => {
   it("Renders a button with the text 'Material Auslagern'", async () => {

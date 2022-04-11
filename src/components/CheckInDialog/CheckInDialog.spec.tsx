@@ -2,8 +2,16 @@ import React, { ComponentProps } from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
+import { useIsAuthenticated } from "@azure/msal-react";
 import CheckInDialog from "./CheckInDialog";
 import InventoryItem from "../../types/InventoryItem";
+
+jest.mock("@azure/msal-react");
+
+beforeEach(() => {
+  // @ts-ignore
+  useIsAuthenticated.mockReturnValue(true);
+});
 
 const baseListItems: Array<InventoryItem> = [
   {
