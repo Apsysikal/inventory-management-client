@@ -25,9 +25,9 @@ const initializeState = (
 ): InventoryItem => {
   return {
     ...item,
-    checked: false,
-    maxCount: itemType === "checkin" ? 0 : item.count,
-    count: 0,
+    checked: item.checked || false,
+    maxCount: itemType === "checkin" ? 0 : item.maxCount || item.count,
+    count: item.count || 0,
   };
 };
 

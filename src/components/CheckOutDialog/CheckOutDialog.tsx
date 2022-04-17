@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import LogOutIcon from "@mui/icons-material/LogoutOutlined";
-import CheckOutDialogListItem from "../CheckOutDialogListItem/CheckOutDialogListItem";
+import InventoryListItem from "../InventoryListItem/InventoryListItem";
 import InventoryItem from "../../types/InventoryItem";
 import { useIsAuthenticated } from "@azure/msal-react";
 
@@ -108,10 +108,11 @@ export default function CheckOutDialog(props: CheckOutDialogProps) {
               value={searchText}
             ></TextField>
             {items.filter(searchPredicate).map((item) => (
-              <CheckOutDialogListItem
+              <InventoryListItem
                 key={item.serial}
-                item={item}
-                onItemChangeCallback={handleItemChange}
+                initialItem={item}
+                itemType={"checkout"}
+                callback={handleItemChange}
               />
             ))}
           </List>

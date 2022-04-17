@@ -8,7 +8,7 @@ import List from "@mui/material/List";
 import TextField from "@mui/material/TextField";
 import LogInIcon from "@mui/icons-material/LoginOutlined";
 import InventoryItem from "../../types/InventoryItem";
-import CheckInDialogListItem from "../CheckInDialogListItem/CheckInDialogListItem";
+import InventoryListItem from "../InventoryListItem/InventoryListItem";
 import { useIsAuthenticated } from "@azure/msal-react";
 
 interface CheckInDialogProps {
@@ -104,10 +104,11 @@ export default function CheckInDialog(props: CheckInDialogProps) {
               value={searchText}
             ></TextField>
             {items.filter(searchPredicate).map((item: InventoryItem) => (
-              <CheckInDialogListItem
+              <InventoryListItem
                 key={item.serial}
-                item={item}
-                onItemChangedCallback={handleItemChange}
+                initialItem={item}
+                itemType={"checkin"}
+                callback={handleItemChange}
               />
             ))}
           </List>
