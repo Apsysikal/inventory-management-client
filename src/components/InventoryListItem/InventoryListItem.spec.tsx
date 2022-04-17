@@ -9,7 +9,8 @@ const baseItem: InventoryItem = {
   checked: false,
   serial: "serialforbaseitem",
   description: "descriptionforbaseitem",
-  count: 2,
+  count: 0,
+  maxCount: 2,
 };
 
 const baseProps = {
