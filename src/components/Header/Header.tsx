@@ -7,7 +7,13 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { Breakpoint } from "@mui/material";
-import { useMsal, useIsAuthenticated } from "@azure/msal-react";
+import {
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate,
+  useMsal,
+} from "@azure/msal-react";
+
+import UserInformation from "../UserInformation/UserInformation";
 
 interface HeaderProps {
   sx?: object;
@@ -16,13 +22,12 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const {instance} = useMsal();
-  const isAuthenticated = useIsAuthenticated();
+  const { instance, accounts } = useMsal();
 
   const handleLogin = async () => {
     const result = await instance.loginPopup();
     console.log(result);
-  }
+  };
 
   return (
     <>
@@ -41,13 +46,14 @@ export default function Header(props: HeaderProps) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {props.titleText}
             </Typography>
-            {isAuthenticated ? "Logged in" : "Nope"}
-            <Button
-              color="inherit"
-              onClick={handleLogin}
-            >
-              Login
-            </Button>
+            <AuthenticatedTemplate>
+              <UserInformation accountInfo={accounts[0]} />
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+              <Button color="inherit" onClick={handleLogin}>
+                Login
+              </Button>
+            </UnauthenticatedTemplate>
           </Toolbar>
         </Container>
       </AppBar>
