@@ -21,8 +21,6 @@ const UserInformation = ({ accountInfo }: UserInformationProps) => {
     setAnchorElement(event.currentTarget);
   };
 
-  const handleLogout = () => {};
-
   const handleClose = () => {
     setAnchorElement(null);
   };
