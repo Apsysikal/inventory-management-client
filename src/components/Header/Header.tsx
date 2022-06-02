@@ -13,7 +13,8 @@ import {
   useMsal,
 } from "@azure/msal-react";
 
-import UserInformation from "../UserInformation/UserInformation";
+import AccountMenu from "../AccountMenu/AccountMenu";
+import { loginRequest } from "../../config/msal";
 
 interface HeaderProps {
   sx?: object;
@@ -22,11 +23,16 @@ interface HeaderProps {
 }
 
 export default function Header(props: HeaderProps) {
-  const { instance, accounts } = useMsal();
+  const { instance } = useMsal();
 
   const handleLogin = async () => {
-    const result = await instance.loginPopup();
-    console.log(result);
+    const result = await instance.loginPopup(loginRequest);
+
+    const { account } = result;
+
+    if (account) {
+      instance.setActiveAccount(account);
+    }
   };
 
   return (
@@ -47,7 +53,7 @@ export default function Header(props: HeaderProps) {
               {props.titleText}
             </Typography>
             <AuthenticatedTemplate>
-              <UserInformation accountInfo={accounts[0]} />
+              <AccountMenu />
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
               <Button color="inherit" onClick={handleLogin}>
