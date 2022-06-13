@@ -8,6 +8,9 @@ const msalConfiguration: Configuration = {
   auth: {
     clientId: String(process.env.REACT_APP_MSAL_CLIENT_ID),
   },
+  cache: {
+    cacheLocation: "localStorage",
+  },
 };
 
 export const loginRequest: PopupRequest = {

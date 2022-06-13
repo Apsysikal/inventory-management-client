@@ -19,10 +19,15 @@ import { loginRequest } from "../../config/msal";
 const AccountMenu = () => {
   const { instance, accounts } = useMsal();
   const account = useAccount();
-  const activeAccount = account ? account : accounts[0];
 
+  const [activeAccount, setActiveAccount] = useState(account);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  if (!activeAccount) {
+    instance.setActiveAccount(accounts[0]);
+    return null;
+  }
 
   const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +57,7 @@ const AccountMenu = () => {
   const selectAccount = (account: undefined | AccountInfo) => {
     if (account) {
       instance.setActiveAccount(account);
+      setActiveAccount(account);
     }
   };
 
@@ -64,6 +70,7 @@ const AccountMenu = () => {
 
     if (account) {
       instance.setActiveAccount(account);
+      setActiveAccount(account);
     }
   };
 
@@ -74,6 +81,7 @@ const AccountMenu = () => {
   return (
     <>
       <IconButton size="large" onClick={handleMenu} color="inherit">
+        {activeAccount.name ? <Typography>{`Welcome, ${activeAccount.name}`}</Typography>: null}
         <Avatar color="inherit">
           {getInitials(activeAccount.name, activeAccount.username)}
         </Avatar>

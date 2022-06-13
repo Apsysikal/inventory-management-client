@@ -18,11 +18,15 @@ import { loginRequest } from "../../config/msal";
 
 interface HeaderProps {
   sx?: object;
-  maxWidth: Breakpoint;
+  maxWidth?: Breakpoint;
   titleText: string;
 }
 
-export default function Header(props: HeaderProps) {
+export default function Header({
+  sx = { mb: 2 },
+  maxWidth = "md" as Breakpoint,
+  titleText,
+}: HeaderProps) {
   const { instance } = useMsal();
 
   const handleLogin = async () => {
@@ -37,9 +41,9 @@ export default function Header(props: HeaderProps) {
 
   return (
     <>
-      <AppBar position="static" sx={props.sx}>
-        <Container maxWidth={props.maxWidth}>
-          <Toolbar style={{ maxWidth: props.maxWidth }}>
+      <AppBar position="static" sx={sx}>
+        <Container maxWidth={maxWidth}>
+          <Toolbar style={{ maxWidth: maxWidth }}>
             <IconButton
               size="large"
               edge="start"
@@ -50,7 +54,7 @@ export default function Header(props: HeaderProps) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {props.titleText}
+              {titleText}
             </Typography>
             <AuthenticatedTemplate>
               <AccountMenu />

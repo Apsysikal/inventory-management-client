@@ -1,99 +1,26 @@
-import * as React from "react";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import CheckOutDialog from "../components/CheckOutDialog/CheckOutDialog";
-import CheckInDialog from "../components/CheckInDialog/CheckInDialog";
-import ItemTable from "../components/ItemTable/ItemTable";
-import { get, modify } from "../db";
-import InventoryItem from "../types/InventoryItem";
+import { Link } from "react-router-dom";
 
-const rows: Array<InventoryItem> = [];
+import { Grid, Button } from "@mui/material";
 
-export default function Home() {
-  const [listItems, setListItems] = React.useState(rows);
-  const [searchText, setSearchText] = React.useState("");
+import { Page } from "../components/templates/Page";
 
-  React.useEffect(() => {
-    get("/item")
-      .then((response) => {
-        // @ts-nocheck
-        setListItems([...response.data]);
-      })
-      .catch(console.debug);
-  }, []);
-
-  const handleSearchChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setSearchText(event.target.value);
-  };
-
-  const handleCheckInDialog = (items: Array<InventoryItem>) => {
-    const updatedListItems = listItems;
-
-    items.forEach((item: InventoryItem) => {
-      const index = updatedListItems.findIndex((listItem) => {
-        return listItem.serial === item.serial;
-      });
-
-      updatedListItems[index].count += item.count;
-
-      modify("/item", updatedListItems[index])
-        .then(console.debug)
-        .catch(console.debug);
-    });
-
-    setListItems([...updatedListItems]);
-  };
-
-  const handleCheckOutDialog = (items: Array<InventoryItem>) => {
-    const updatedListItems = listItems;
-
-    items.forEach((item: InventoryItem) => {
-      const index = updatedListItems.findIndex((listItem) => {
-        return listItem.serial === item.serial;
-      });
-
-      updatedListItems[index].count -= item.count;
-
-      modify("/item", updatedListItems[index])
-        .then(console.debug)
-        .catch(console.debug);
-    });
-
-    setListItems([...updatedListItems]);
-  };
-
+const Home = () => {
   return (
-        <Container maxWidth="md">
-          <Box>
-            <Grid container spacing={2}>
-              <Grid item sm={6} xs={12}>
-                <CheckInDialog
-                  listItems={listItems}
-                  callback={handleCheckInDialog}
-                />
-              </Grid>
-              <Grid item sm={6} xs={12}>
-                <CheckOutDialog
-                  listItems={listItems}
-                  callback={handleCheckOutDialog}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="standard"
-                  fullWidth
-                  label="Suchbegriff"
-                  onChange={handleSearchChange}
-                  value={searchText}
-                ></TextField>
-              </Grid>
-            </Grid>
-            <ItemTable listItems={listItems} searchText={searchText} />
-          </Box>
-        </Container>
+    <Page>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Button variant="contained" component={Link} to="checkin" fullWidth>
+            Checkin
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" component={Link} to="checkout" fullWidth>
+            Checkout
+          </Button>
+        </Grid>
+      </Grid>
+    </Page>
   );
-}
+};
+
+export { Home };
