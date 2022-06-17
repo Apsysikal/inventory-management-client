@@ -5,7 +5,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
 } from "@mui/material";
 
 const ConfirmDialog: React.FC<{
@@ -16,7 +16,7 @@ const ConfirmDialog: React.FC<{
   onConfirm: React.MouseEventHandler<HTMLButtonElement>;
 }> = ({ children, title, open, onCancel, onConfirm }) => {
   return (
-    <Dialog open={open} onClose={onCancel}>
+    <Dialog fullWidth open={open} onClose={onCancel}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>

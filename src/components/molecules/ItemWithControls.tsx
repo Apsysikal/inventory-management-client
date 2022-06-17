@@ -17,7 +17,7 @@ const ItemWithControls: React.FC<{
   const { checked, count, maxCount } = item;
 
   const removeDsiabled = count === 0;
-  const addDisabled = maxCount ? count === maxCount : false;
+  const addDisabled = count === maxCount;
 
   return (
     <ListItem>

@@ -4,22 +4,32 @@ import { Grid, Button } from "@mui/material";
 
 import { Page } from "../components/templates/Page";
 
+import Header from "../components/Header/Header";
+
 const Home = () => {
   return (
-    <Page>
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Button variant="contained" component={Link} to="checkin" fullWidth>
-            Checkin
-          </Button>
+    <>
+      <Header titleText="Inventory Management" />
+      <Page>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Button variant="contained" component={Link} to="checkin" fullWidth>
+              Checkin
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              component={Link}
+              to="checkout"
+              fullWidth
+            >
+              Checkout
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" component={Link} to="checkout" fullWidth>
-            Checkout
-          </Button>
-        </Grid>
-      </Grid>
-    </Page>
+      </Page>
+    </>
   );
 };
 

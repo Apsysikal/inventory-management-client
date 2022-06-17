@@ -80,8 +80,10 @@ const AccountMenu = () => {
 
   return (
     <>
+      {activeAccount.name ? (
+        <Typography>{`Welcome, ${activeAccount.name}`}</Typography>
+      ) : null}
       <IconButton size="large" onClick={handleMenu} color="inherit">
-        {activeAccount.name ? <Typography>{`Welcome, ${activeAccount.name}`}</Typography>: null}
         <Avatar color="inherit">
           {getInitials(activeAccount.name, activeAccount.username)}
         </Avatar>
