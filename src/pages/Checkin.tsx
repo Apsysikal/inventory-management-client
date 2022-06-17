@@ -28,12 +28,14 @@ const id = "04b47993d88d3148e8ac";
 
 const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { loading, data, error } = useGet(`${url}/${id}/items`);
-  const [items, setItems] = useState(data);
+  const { loading, data, error } = useGet<InventoryItem[]>(
+    `${url}/${id}/items`
+  );
+  const [items, setItems] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initializedItems = initializeCheckinItems(data);
+    const initializedItems = initializeCheckinItems(data ? data : []);
 
     setItems([...initializedItems]);
   }, [data]);
