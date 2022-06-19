@@ -20,6 +20,7 @@ const CreateItem: React.FC<{
         <TextField
           required
           fullWidth
+          autoFocus
           label="Serial"
           placeholder="5070102"
           value={serial}
