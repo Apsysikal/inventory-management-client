@@ -29,7 +29,7 @@ const id = "04b47993d88d3148e8ac";
 const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { loading, data, error } = useGet<InventoryItem[]>(
-    `${url}/${id}/items`
+    `${url}/${id}/items?limit=1000`
   );
   const [items, setItems] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();

@@ -17,7 +17,12 @@ const Home = () => {
             <MetaDisplay />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" component={Link} to="checkin" fullWidth>
+            <Button
+              variant="contained"
+              component={Link}
+              to="items/checkin"
+              fullWidth
+            >
               Checkin
             </Button>
           </Grid>
@@ -25,10 +30,20 @@ const Home = () => {
             <Button
               variant="contained"
               component={Link}
-              to="checkout"
+              to="items/checkout"
               fullWidth
             >
               Checkout
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              component={Link}
+              to="items/create"
+              fullWidth
+            >
+              Create Item
             </Button>
           </Grid>
         </Grid>
