@@ -7,8 +7,6 @@ import { CreateItem as CreateItemForm } from "../components/organisms/CreateItem
 
 import Header from "../components/Header/Header";
 
-import InventoryItem from "../types/InventoryItem";
-
 const url = "https://krat.es";
 const id = "04b47993d88d3148e8ac";
 
