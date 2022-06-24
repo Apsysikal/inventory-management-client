@@ -55,7 +55,7 @@ const CreateItem: React.FC<{
             handleCancel();
           }}
         >
-          Cancel
+          Back
         </Button>
       </Grid>
       <Grid item xs={12} sm={6}>

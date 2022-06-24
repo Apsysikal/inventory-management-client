@@ -9,13 +9,13 @@ const endpoint = "items";
 
 const api = new Api(url, endpoint);
 
-type ItemRequest = {
+export type ItemRequest = {
   serial: string;
   description: string;
   count: number;
 };
 
-type ItemResponse = {
+export type ItemResponse = {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
@@ -24,7 +24,7 @@ type ItemResponse = {
   count: number;
 };
 
-type FilterParams = {
+export type FilterParams = {
   limit?: number;
   skip?: number;
   query?: string;

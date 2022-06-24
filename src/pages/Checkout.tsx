@@ -26,7 +26,7 @@ import InventoryItem from "../types/InventoryItem";
 
 const Checkout = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { loading, data, error } = useItems();
+  const { loading, data, error } = useItems({ limit: 1000, query: "count:>0" });
   const [items, setItems] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();
 

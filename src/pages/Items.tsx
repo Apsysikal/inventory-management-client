@@ -11,7 +11,7 @@ import { useItems } from "../hooks/api";
 import Header from "../components/Header/Header";
 
 const Items = () => {
-  const { loading, data } = useItems();
+  const { loading, data } = useItems({ limit: 1000 });
 
   if (loading) {
     return <Loading />;
@@ -23,7 +23,7 @@ const Items = () => {
       <Page>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Paper sx={{ maxHeight: "80vh", overflow: "auto" }}>
+            <Paper sx={{ maxHeight: "75vh", overflow: "auto" }}>
               <ItemList items={data || []} />
             </Paper>
           </Grid>
@@ -40,6 +40,16 @@ const Items = () => {
               fullWidth
             >
               Checkout
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="outlined"
+              component={Link}
+              to={-1 as any}
+              fullWidth
+            >
+              Back
             </Button>
           </Grid>
         </Grid>
