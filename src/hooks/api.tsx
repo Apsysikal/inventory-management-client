@@ -1,28 +1,31 @@
+import { AxiosError } from "axios";
 import { useState, useEffect } from "react";
-import axios from "axios";
 
-function useGet<Type>(endpoint: string) {
-  const [data, setData] = useState<Type>();
+import { getItems } from "../service/item";
+
+import InventoryItem from "../types/InventoryItem";
+
+function useItems() {
+  const [data, setData] = useState<InventoryItem[]>();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const getEndpoint = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get<Type>(endpoint);
-        setData(data);
-      } catch (error: any) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setLoading(true);
 
-    getEndpoint();
-  }, [endpoint]);
+    getItems({ limit: 1000 })
+      .then(({ data }) => {
+        setData(data);
+      })
+      .catch((error: Error | AxiosError) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return { loading, data, error };
 }
 
-export { useGet };
+export { useItems };

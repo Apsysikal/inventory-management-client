@@ -12,7 +12,8 @@ import { Loading } from "../components/templates/Loading";
 
 import Header from "../components/Header/Header";
 
-import { useGet } from "../hooks/api";
+import { useItems } from "../hooks/api";
+import { getItems, updateItem } from "../service/item";
 import { initializeCheckoutItems } from "../utils/initializeItems";
 import { getItemIndex, getCheckedItems } from "../utils/items";
 import {
@@ -23,14 +24,9 @@ import {
 
 import InventoryItem from "../types/InventoryItem";
 
-const url = "https://krat.es";
-const id = "04b47993d88d3148e8ac";
-
 const Checkout = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { loading, data, error } = useGet<InventoryItem[]>(
-    `${url}/${id}/items?query=count:>0`
-  );
+  const { loading, data, error } = useItems();
   const [items, setItems] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();
 
@@ -71,8 +67,22 @@ const Checkout = () => {
     setDialogOpen(false);
   };
 
-  const onConfirm = () => {
-    setDialogOpen(false);
+  const onConfirm = async () => {
+    const selectedItems = getCheckedItems(items);
+
+    await Promise.all(
+      selectedItems.map(async (item) => {
+        const { _id: id, serial, description, count } = item;
+
+        getItems({ query: `serial:${serial}` }).then(({ data }) => {
+          if (data.length <= 0) throw new Error("Item does not exist in db");
+
+          const modifiedCount = data[0].count - count;
+          return updateItem(id, { serial, description, count: modifiedCount });
+        });
+      })
+    );
+
     navigate("/");
   };
 
@@ -90,7 +100,7 @@ const Checkout = () => {
       <Page>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Paper>
+            <Paper sx={{ maxHeight: "80vh", overflow: "auto" }}>
               <ItemListWithControls
                 items={items}
                 onCheckbox={onCheckbox}
@@ -100,7 +110,12 @@ const Checkout = () => {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Button component={Link} to="/" variant="outlined" fullWidth>
+            <Button
+              component={Link}
+              to={-1 as any}
+              variant="outlined"
+              fullWidth
+            >
               Back
             </Button>
           </Grid>

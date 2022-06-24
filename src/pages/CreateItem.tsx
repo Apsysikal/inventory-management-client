@@ -1,20 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
-
 import { Page } from "../components/templates/Page";
 import { CreateItem as CreateItemForm } from "../components/organisms/CreateItem";
-
 import Header from "../components/Header/Header";
 
-const url = "https://krat.es";
-const id = "04b47993d88d3148e8ac";
+import { getItems, createItem } from "../service/item";
 
 const CreateItem = () => {
   const navigate = useNavigate();
 
   const handleCancel = () => {
-    navigate("/");
+    navigate(-1 as any);
   };
 
   const handleCreate = async (item: {
@@ -22,13 +18,14 @@ const CreateItem = () => {
     description: string;
     count: number;
   }) => {
-    const getResponse = await axios.get<[]>(
-      `${url}/${id}/items?query=serial:${item.serial}&limit=1`
-    );
+    const getResponse = await getItems({
+      query: `serial:${item.serial}`,
+      limit: 1,
+    });
 
     if (getResponse.data.length > 0) throw new Error("Item already exists");
 
-    const postResponse = await axios.post(`${url}/${id}/items`, item);
+    const postResponse = await createItem(item);
 
     if (postResponse.status === 200) {
       console.log("Item created");

@@ -2,7 +2,7 @@ import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { MsalProvider } from "@azure/msal-react";
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import { RecoilRoot } from "recoil";
 
@@ -21,6 +21,7 @@ root.render(
       <MsalProvider instance={instance}>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
+            <CssBaseline enableColorScheme />
             <App />
           </ThemeProvider>
         </BrowserRouter>

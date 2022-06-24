@@ -1,18 +1,25 @@
+import { useEffect, useState } from "react";
 import { Stack, Paper } from "@mui/material";
 
 import { Meta } from "../molecules/Meta";
 
-import { useGet } from "../../hooks/api";
-
-const url = "https://krat.es";
-const id = "04b47993d88d3148e8ac";
+import { getMeta } from "../../service/meta";
 
 const MetaDisplay: React.FC = () => {
-  const { data } = useGet<{
+  const [data, setData] = useState<{
     krateSize: number;
     totalRecords: number;
     updatedAt: Date;
-  }>(`${url}/meta/${id}`);
+  }>();
+
+  useEffect(() => {
+    async function getData() {
+      const { data } = await getMeta();
+      setData(data);
+    }
+
+    getData();
+  }, []);
 
   return (
     <Stack component={Paper} style={{ padding: 5 }}>

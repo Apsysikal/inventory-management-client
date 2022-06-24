@@ -17,30 +17,15 @@ const Home = () => {
             <MetaDisplay />
           </Grid>
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              component={Link}
-              to="items/checkin"
-              fullWidth
-            >
-              Checkin
+            <Button variant="contained" component={Link} to="items" fullWidth>
+              Items
             </Button>
           </Grid>
           <Grid item xs={12}>
             <Button
               variant="contained"
               component={Link}
-              to="items/checkout"
-              fullWidth
-            >
-              Checkout
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              component={Link}
-              to="items/create"
+              to="items/Create"
               fullWidth
             >
               Create Item
