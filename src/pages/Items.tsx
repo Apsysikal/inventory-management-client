@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Grid, Button, Paper } from "@mui/material";
 
 import { Page } from "../components/templates/Page";
-import { Loading } from "../components/templates/Loading";
+import { Loading } from "../components/molecules/Loading";
 import { ItemList } from "../components/organisms/ItemList";
 
 import { useItems } from "../hooks/api";
@@ -13,19 +13,19 @@ import Header from "../components/Header/Header";
 const Items = () => {
   const { loading, data } = useItems({ limit: 1000 });
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <>
       <Header titleText="Inventory Management" />
       <Page>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Paper sx={{ maxHeight: "75vh", overflow: "auto" }}>
-              <ItemList items={data || []} />
-            </Paper>
+            {loading ? (
+              <Loading />
+            ) : (
+              <Paper sx={{ maxHeight: "75vh", overflow: "auto" }}>
+                <ItemList items={data || []} />
+              </Paper>
+            )}
           </Grid>
           <Grid item xs={6}>
             <Button variant="contained" component={Link} to="checkin" fullWidth>

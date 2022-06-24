@@ -8,7 +8,7 @@ import { ItemList } from "../components/organisms/ItemList";
 import { ItemListWithControls } from "../components/organisms/ItemListWithControls";
 import { ConfirmDialog } from "../components/molecules/ConfirmDialog";
 import { Page } from "../components/templates/Page";
-import { Loading } from "../components/templates/Loading";
+import { Loading } from "../components/molecules/Loading";
 
 import Header from "../components/Header/Header";
 
@@ -86,10 +86,6 @@ const Checkout = () => {
     navigate("/");
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -100,14 +96,18 @@ const Checkout = () => {
       <Page>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Paper sx={{ maxHeight: "80vh", overflow: "auto" }}>
-              <ItemListWithControls
-                items={items}
-                onCheckbox={onCheckbox}
-                onRemove={onRemove}
-                onAdd={onAdd}
-              />
-            </Paper>
+            {loading ? (
+              <Loading />
+            ) : (
+              <Paper sx={{ maxHeight: "80vh", overflow: "auto" }}>
+                <ItemListWithControls
+                  items={items}
+                  onCheckbox={onCheckbox}
+                  onRemove={onRemove}
+                  onAdd={onAdd}
+                />
+              </Paper>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <Button
