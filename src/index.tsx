@@ -10,7 +10,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import instance from "./config/msal";
-import theme from "./components/Theme/Theme";
+import { theme } from "./config/theme";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
