@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 const ConfirmDialog: React.FC<{
-  children?: React.ReactChild;
+  children?: React.ReactNode;
   title: string;
   open: boolean;
   onCancel: React.MouseEventHandler<HTMLButtonElement>;
