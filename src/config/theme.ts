@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material";
+import { createTheme, ThemeOptions } from "@mui/material";
 
-const theme = createTheme({
+const companyTheme: ThemeOptions = {
   palette: {
     mode: "light",
     primary: {
@@ -16,6 +16,8 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
-});
+};
+
+const theme = createTheme(companyTheme);
 
 export { theme };
