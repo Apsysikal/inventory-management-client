@@ -27,7 +27,7 @@ const CreateItem = () => {
 
     const postResponse = await createItem(item);
 
-    if (postResponse.status === 200) {
+    if (postResponse.status === 201) {
       console.log("Item created");
       navigate("/");
     } else {

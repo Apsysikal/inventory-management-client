@@ -1,8 +1,8 @@
 import { Api } from "../api/api";
 
-import { API_URL, KRATE_ID } from "../config/api";
+import { API_URL } from "../config/api";
 
-const url = `${API_URL}/meta/${KRATE_ID}`;
+const url = `${API_URL}/meta`;
 const endpoint = "";
 
 const api = new Api(url, endpoint);

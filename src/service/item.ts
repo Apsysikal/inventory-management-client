@@ -2,10 +2,10 @@ import { AxiosRequestConfig } from "axios";
 
 import { Api } from "../api/api";
 
-import { API_URL, KRATE_ID } from "../config/api";
+import { API_URL } from "../config/api";
 
-const url = `${API_URL}/${KRATE_ID}`;
-const endpoint = "items";
+const url = `${API_URL}`;
+const endpoint = "item";
 
 const api = new Api(url, endpoint);
 
@@ -38,7 +38,7 @@ function getItems(params?: FilterParams) {
 
 function getItemById(id: string) {
   const config: AxiosRequestConfig = {
-    url: `record/${id}`,
+    url: `${api.getEndpoint()}/${id}`,
   };
 
   return api.get<ItemResponse[]>(config);
@@ -54,7 +54,7 @@ function createItems(data: ItemRequest[]) {
 
 function updateItem(id: string, data: ItemRequest) {
   const config: AxiosRequestConfig = {
-    url: id,
+    url: `${api.getEndpoint()}/${id}`,
   };
 
   return api.put<ItemResponse>(data, config);
