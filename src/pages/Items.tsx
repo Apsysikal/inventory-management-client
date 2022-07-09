@@ -6,7 +6,7 @@ import { Page } from "../components/templates/Page";
 import { Loading } from "../components/molecules/Loading";
 import { ItemList } from "../components/organisms/ItemList";
 
-import { useItems } from "../hooks/api";
+import { useItems } from "../hooks/useItems";
 
 import Header from "../components/Header/Header";
 

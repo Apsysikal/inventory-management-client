@@ -1,11 +1,11 @@
-import { AxiosError } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 import { useState, useEffect } from "react";
 
 import { getItems, FilterParams } from "../service/item";
 
 import InventoryItem from "../types/InventoryItem";
 
-function useItems(params?: FilterParams) {
+function useItems(params?: FilterParams, config?: AxiosRequestConfig) {
   const [data, setData] = useState<InventoryItem[]>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -13,7 +13,7 @@ function useItems(params?: FilterParams) {
   useEffect(() => {
     setLoading(true);
 
-    getItems(params)
+    getItems(params, config)
       .then(({ data }) => {
         setData(data);
       })

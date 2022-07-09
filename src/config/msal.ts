@@ -14,7 +14,7 @@ const msalConfiguration: Configuration = {
 };
 
 export const loginRequest: PopupRequest = {
-  scopes: ["User.Read"],
+  scopes: ["api://02a7dd50-9321-4d59-87c3-5b81e339057d/Items.Access"],
 };
 
 const pca = new PublicClientApplication(msalConfiguration);

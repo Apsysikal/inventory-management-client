@@ -12,7 +12,7 @@ import { Loading } from "../components/molecules/Loading";
 
 import Header from "../components/Header/Header";
 
-import { useItems } from "../hooks/api";
+import { useItems } from "../hooks/useItems";
 import { getItems, updateItem } from "../service/item";
 import { initializeCheckoutItems } from "../utils/initializeItems";
 import { getItemIndex, getCheckedItems } from "../utils/items";

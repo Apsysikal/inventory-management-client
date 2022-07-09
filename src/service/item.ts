@@ -30,34 +30,41 @@ export type FilterParams = {
   query?: string;
 };
 
-function getItems(params?: FilterParams) {
-  if (params) return api.get<ItemResponse[]>({ params });
-
-  return api.get<ItemResponse[]>();
+function getItems(params?: FilterParams, config?: AxiosRequestConfig) {
+  return api.get<ItemResponse[]>({
+    ...config,
+    params,
+  });
 }
 
-function getItemById(id: string) {
-  const config: AxiosRequestConfig = {
+function getItemById(id: string, config?: AxiosRequestConfig) {
+  return api.get<ItemResponse[]>({
+    ...config,
     url: `${api.getEndpoint()}/${id}`,
-  };
-
-  return api.get<ItemResponse[]>(config);
+  });
 }
 
-function createItem(data: ItemRequest) {
-  return api.post<ItemResponse>(data);
+function createItem(data: ItemRequest, config?: AxiosRequestConfig) {
+  return api.post<ItemResponse>(data, {
+    ...config,
+  });
 }
 
-function createItems(data: ItemRequest[]) {
-  return api.post<ItemResponse[]>(data);
+function createItems(data: ItemRequest[], config?: AxiosRequestConfig) {
+  return api.post<ItemResponse[]>(data, {
+    ...config,
+  });
 }
 
-function updateItem(id: string, data: ItemRequest) {
-  const config: AxiosRequestConfig = {
+function updateItem(
+  id: string,
+  data: ItemRequest,
+  config?: AxiosRequestConfig
+) {
+  return api.put<ItemResponse>(data, {
+    ...config,
     url: `${api.getEndpoint()}/${id}`,
-  };
-
-  return api.put<ItemResponse>(data, config);
+  });
 }
 
 export { getItems, getItemById, createItem, createItems, updateItem };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import { Loading } from "../components/molecules/Loading";
 
 import Header from "../components/Header/Header";
 
-import { useItems } from "../hooks/api";
+import { useItems } from "../hooks/useItems";
 import { getItems, updateItem } from "../service/item";
 import { initializeCheckinItems } from "../utils/initializeItems";
 import { getItemIndex, getCheckedItems } from "../utils/items";
@@ -23,10 +23,19 @@ import {
 } from "../utils/handleItemClick";
 
 import InventoryItem from "../types/InventoryItem";
+import { useToken } from "../hooks/useToken";
 
 const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { loading, data, error } = useItems({ limit: 1000 });
+  const [token] = useToken();
+  const { loading, data, error } = useItems(
+    { limit: 1000 },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   const [items, setItems] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();
 
@@ -74,11 +83,26 @@ const Checkin = () => {
       selectedItems.map(async (item) => {
         const { _id: id, serial, description, count } = item;
 
-        getItems({ query: `serial:${serial}` }).then(({ data }) => {
+        getItems(
+          { query: `serial:${serial}` },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ).then(({ data }) => {
           if (data.length <= 0) throw new Error("Item does not exist in db");
 
           const modifiedCount = data[0].count + count;
-          return updateItem(id, { serial, description, count: modifiedCount });
+          return updateItem(
+            id,
+            { serial, description, count: modifiedCount },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
         });
       })
     );
