@@ -1,66 +1,45 @@
-import { useEffect, useState } from "react";
-import { useMsal, useAccount } from "@azure/msal-react";
-import {
-  InteractionRequiredAuthError,
-  SilentRequest,
-} from "@azure/msal-browser";
+/**
+ * This is copied and modified from https://blog.galmalachi.com/react-and-jwt-authentication-the-right-way
+ */
 
-import { loginRequest } from "../config/msal";
+import { useEffect, useRef, useCallback } from "react";
+import axios from "axios";
 
-function useToken() {
-  const { instance } = useMsal();
-  const account = useAccount();
-  const [token, setToken] = useState("");
+import { useTokenExpiration } from "./useTokenExpiration";
 
-  useEffect(() => {
-    if (!account) {
-      return;
-    }
+export interface TokenResponse {
+  expirationDate: Date;
+  token: string;
+}
 
-    const request: SilentRequest = {
-      ...loginRequest,
-      account,
-    };
+function useToken(onTokenInvalid: Function, onTokenRefreshRequired: Function) {
+  const accessToken = useRef<string>();
+  const { setTokenExpiration, clearAutomaticRefresh } = useTokenExpiration(
+    onTokenRefreshRequired
+  );
 
-    const fetchToken = async () => {
-      try {
-        const { accessToken } = await instance.acquireTokenSilent(request);
-        setToken(accessToken);
-      } catch (error) {
-        if (error instanceof InteractionRequiredAuthError) {
-          // Try again with popup
-          const { accessToken } = await instance.acquireTokenPopup(request);
-          setToken(accessToken);
-        }
-      }
-    };
+  const setToken = useCallback(
+    ({ expirationDate, token }: TokenResponse) => {
+      accessToken.current = token;
+      setTokenExpiration(new Date(expirationDate));
+    },
+    [setTokenExpiration]
+  );
 
-    fetchToken();
-  }, [instance, account]);
+  const isAuthenticated = useCallback(() => {
+    return accessToken.current ? true : false;
+  }, []);
 
-  const refetch = async () => {
-    if (!account) {
-      return;
-    }
+  const clearToken = useCallback(() => {
+    accessToken.current = undefined;
+    clearAutomaticRefresh();
+  }, [clearAutomaticRefresh]);
 
-    const request: SilentRequest = {
-      ...loginRequest,
-      account,
-    };
-
-    try {
-      const { accessToken } = await instance.acquireTokenSilent(request);
-      setToken(accessToken);
-    } catch (error) {
-      if (error instanceof InteractionRequiredAuthError) {
-        // Try again with popup
-        const { accessToken } = await instance.acquireTokenPopup(request);
-        setToken(accessToken);
-      }
-    }
+  return {
+    setToken,
+    isAuthenticated,
+    clearToken,
   };
-
-  return [token, refetch];
 }
 
 export { useToken };
