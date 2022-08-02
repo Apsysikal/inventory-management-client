@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import { Grid, Button } from "@mui/material";
 
 import { Page } from "../components/templates/Page";

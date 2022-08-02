@@ -23,19 +23,10 @@ import {
 } from "../utils/handleItemClick";
 
 import InventoryItem from "../types/InventoryItem";
-import { useToken } from "../hooks/useToken";
 
 const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [token] = useToken();
-  const { loading, data, error } = useItems(
-    { limit: 1000 },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const { loading, data, error } = useItems({ limit: 1000 });
   const [items, setItems] = useState<InventoryItem[]>([]);
   const navigate = useNavigate();
 
@@ -83,26 +74,11 @@ const Checkin = () => {
       selectedItems.map(async (item) => {
         const { _id: id, serial, description, count } = item;
 
-        getItems(
-          { query: `serial:${serial}` },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ).then(({ data }) => {
+        getItems({ query: `serial:${serial}` }).then(({ data }) => {
           if (data.length <= 0) throw new Error("Item does not exist in db");
 
           const modifiedCount = data[0].count + count;
-          return updateItem(
-            id,
-            { serial, description, count: modifiedCount },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          return updateItem(id, { serial, description, count: modifiedCount });
         });
       })
     );
