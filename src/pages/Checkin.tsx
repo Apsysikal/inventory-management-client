@@ -21,6 +21,7 @@ import {
   handleItemRemoveClick,
   handleItemAddClick,
 } from "../utils/handleItemClick";
+import { useAccount } from "../hooks/useAccount";
 
 import InventoryItem from "../types/InventoryItem";
 
@@ -28,6 +29,7 @@ const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { loading, data, error } = useItems({ limit: 1000 });
   const [items, setItems] = useState<InventoryItem[]>([]);
+  const account = useAccount();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,6 +70,7 @@ const Checkin = () => {
   };
 
   const onConfirm = async () => {
+    if (!account) return; // Return when no user is signed in
     const selectedItems = getCheckedItems(items);
 
     await Promise.all(
@@ -78,7 +81,15 @@ const Checkin = () => {
           if (data.length <= 0) throw new Error("Item does not exist in db");
 
           const modifiedCount = data[0].count + count;
-          return updateItem(id, { serial, description, count: modifiedCount });
+          return updateItem(
+            id,
+            { serial, description, count: modifiedCount },
+            {
+              headers: {
+                Authorization: `Bearer ${account.tokens.accessToken}`,
+              },
+            }
+          );
         });
       })
     );
@@ -123,7 +134,7 @@ const Checkin = () => {
             <Button
               variant="contained"
               fullWidth
-              disabled={getCheckedItems(items)?.length === 0}
+              disabled={!account || getCheckedItems(items)?.length === 0}
               onClick={() => setDialogOpen(true)}
             >
               Checkin
