@@ -7,7 +7,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { Breakpoint } from "@mui/material";
+
+import { AvatarWithLogoutButton } from "../molecules/AvatarWithLogoutButton";
 import { useAuthentication } from "../../hooks/useAuth";
+import { useAccount } from "../../hooks/useAccount";
 
 interface HeaderProps {
   sx?: object;
@@ -21,9 +24,14 @@ export default function Header({
   titleText,
 }: HeaderProps) {
   const { instance } = useAuthentication();
+  const account = useAccount();
 
   const handleLogin = async () => {
     return instance.login("google");
+  };
+
+  const handleLogout = async () => {
+    return instance.logout();
   };
 
   return (
@@ -43,9 +51,13 @@ export default function Header({
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {titleText}
             </Typography>
-            <Button color="inherit" onClick={handleLogin}>
-              Login
-            </Button>
+            {account ? (
+              <AvatarWithLogoutButton onLogout={handleLogout} />
+            ) : (
+              <Button color="inherit" onClick={handleLogin}>
+                Login
+              </Button>
+            )}
           </Toolbar>
         </Container>
       </AppBar>
