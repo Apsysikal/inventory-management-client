@@ -5,8 +5,11 @@ import { Page } from "../components/templates/Page";
 import { MetaDisplay } from "../components/organisms/MetaDisplay";
 
 import Header from "../components/Header/Header";
+import { useAccount } from "../hooks/useAccount";
 
 const Home = () => {
+  const account = useAccount();
+
   return (
     <>
       <Header titleText="Inventory Management" />
@@ -26,6 +29,7 @@ const Home = () => {
               component={Link}
               to="items/Create"
               fullWidth
+              disabled={!account}
             >
               Create Item
             </Button>

@@ -1,12 +1,14 @@
 import React from "react";
-import { Avatar } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 // import { Button } from "@mui/material";
 
-const AvatarWithLogoutButton: React.FC<{ onLogout: Function }> = ({
-  onLogout,
-}) => {
+const AvatarWithLogoutButton: React.FC<{
+  name?: string;
+  onLogout: Function;
+}> = ({ name, onLogout }) => {
   return (
     <>
+      <Typography>{name}</Typography>
       {/* <Button color="inherit" onClick={() => onLogout()}>
         Logout
       </Button> */}

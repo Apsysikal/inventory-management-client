@@ -52,7 +52,10 @@ export default function Header({
               {titleText}
             </Typography>
             {account ? (
-              <AvatarWithLogoutButton onLogout={handleLogout} />
+              <AvatarWithLogoutButton
+                name={account.name}
+                onLogout={handleLogout}
+              />
             ) : (
               <Button color="inherit" onClick={handleLogin}>
                 Login
