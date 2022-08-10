@@ -7,9 +7,9 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { Breakpoint } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import { AvatarWithLogoutButton } from "../molecules/AvatarWithLogoutButton";
-import { useAuthentication } from "../../hooks/useAuth";
 import { useAccount } from "../../hooks/useAccount";
 
 interface HeaderProps {
@@ -23,16 +23,7 @@ export default function Header({
   maxWidth = "md" as Breakpoint,
   titleText,
 }: HeaderProps) {
-  const { instance } = useAuthentication();
   const account = useAccount();
-
-  const handleLogin = async () => {
-    return instance.login("google");
-  };
-
-  const handleLogout = async () => {
-    return instance.logout();
-  };
 
   return (
     <>
@@ -52,12 +43,9 @@ export default function Header({
               {titleText}
             </Typography>
             {account ? (
-              <AvatarWithLogoutButton
-                name={account.name}
-                onLogout={handleLogout}
-              />
+              <AvatarWithLogoutButton name={account.name} onLogout={() => {}} />
             ) : (
-              <Button color="inherit" onClick={handleLogin}>
+              <Button color="inherit" component={Link} to="/signin">
                 Login
               </Button>
             )}

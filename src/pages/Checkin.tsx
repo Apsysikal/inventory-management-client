@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import { Paper, Grid, Button } from "@mui/material";
 
 import { ItemList } from "../components/organisms/ItemList";
@@ -9,9 +7,7 @@ import { ItemListWithControls } from "../components/organisms/ItemListWithContro
 import { ConfirmDialog } from "../components/molecules/ConfirmDialog";
 import { Page } from "../components/templates/Page";
 import { Loading } from "../components/molecules/Loading";
-
 import Header from "../components/Header/Header";
-
 import { useItems } from "../hooks/useItems";
 import { getItems, updateItem } from "../service/item";
 import { initializeCheckinItems } from "../utils/initializeItems";
@@ -22,7 +18,6 @@ import {
   handleItemAddClick,
 } from "../utils/handleItemClick";
 import { useAccount } from "../hooks/useAccount";
-
 import InventoryItem from "../types/InventoryItem";
 
 const Checkin = () => {
