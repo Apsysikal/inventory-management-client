@@ -7,10 +7,12 @@ import { Loading } from "../components/molecules/Loading";
 import { ItemList } from "../components/organisms/ItemList";
 
 import { useItems } from "../hooks/useItems";
+import { useAccount } from "../hooks/useAccount";
 
 import Header from "../components/Header/Header";
 
 const Items = () => {
+  const account = useAccount();
   const { loading, data } = useItems({ limit: 1000 });
 
   return (
@@ -28,7 +30,13 @@ const Items = () => {
             )}
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" component={Link} to="checkin" fullWidth>
+            <Button
+              variant="contained"
+              component={Link}
+              to="checkin"
+              fullWidth
+              disabled={!account}
+            >
               Checkin
             </Button>
           </Grid>
@@ -38,6 +46,7 @@ const Items = () => {
               component={Link}
               to="checkout"
               fullWidth
+              disabled={!account}
             >
               Checkout
             </Button>

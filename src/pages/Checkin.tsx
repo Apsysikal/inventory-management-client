@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import { Paper, Grid, Button } from "@mui/material";
 
 import { ItemList } from "../components/organisms/ItemList";
@@ -9,9 +7,7 @@ import { ItemListWithControls } from "../components/organisms/ItemListWithContro
 import { ConfirmDialog } from "../components/molecules/ConfirmDialog";
 import { Page } from "../components/templates/Page";
 import { Loading } from "../components/molecules/Loading";
-
 import Header from "../components/Header/Header";
-
 import { useItems } from "../hooks/useItems";
 import { getItems, updateItem } from "../service/item";
 import { initializeCheckinItems } from "../utils/initializeItems";
@@ -21,22 +17,14 @@ import {
   handleItemRemoveClick,
   handleItemAddClick,
 } from "../utils/handleItemClick";
-
+import { useAccount } from "../hooks/useAccount";
 import InventoryItem from "../types/InventoryItem";
-import { useToken } from "../hooks/useToken";
 
 const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [token] = useToken();
-  const { loading, data, error } = useItems(
-    { limit: 1000 },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const { loading, data, error } = useItems({ limit: 1000 });
   const [items, setItems] = useState<InventoryItem[]>([]);
+  const account = useAccount();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -77,20 +65,14 @@ const Checkin = () => {
   };
 
   const onConfirm = async () => {
+    if (!account) return; // Return when no user is signed in
     const selectedItems = getCheckedItems(items);
 
     await Promise.all(
       selectedItems.map(async (item) => {
         const { _id: id, serial, description, count } = item;
 
-        getItems(
-          { query: `serial:${serial}` },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ).then(({ data }) => {
+        getItems({ query: `serial:${serial}` }).then(({ data }) => {
           if (data.length <= 0) throw new Error("Item does not exist in db");
 
           const modifiedCount = data[0].count + count;
@@ -99,7 +81,7 @@ const Checkin = () => {
             { serial, description, count: modifiedCount },
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${account.tokens.accessToken}`,
               },
             }
           );
@@ -147,7 +129,7 @@ const Checkin = () => {
             <Button
               variant="contained"
               fullWidth
-              disabled={getCheckedItems(items)?.length === 0}
+              disabled={!account || getCheckedItems(items)?.length === 0}
               onClick={() => setDialogOpen(true)}
             >
               Checkin

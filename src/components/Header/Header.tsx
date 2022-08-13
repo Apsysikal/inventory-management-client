@@ -7,14 +7,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/MenuOutlined";
 import { Breakpoint } from "@mui/material";
-import {
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-  useMsal,
-} from "@azure/msal-react";
+import { Link } from "react-router-dom";
 
-import AccountMenu from "../AccountMenu/AccountMenu";
-import { loginRequest } from "../../config/msal";
+import { AvatarWithLogoutButton } from "../molecules/AvatarWithLogoutButton";
+import { useAccount } from "../../hooks/useAccount";
 
 interface HeaderProps {
   sx?: object;
@@ -27,17 +23,7 @@ export default function Header({
   maxWidth = "md" as Breakpoint,
   titleText,
 }: HeaderProps) {
-  const { instance } = useMsal();
-
-  const handleLogin = async () => {
-    const result = await instance.loginPopup(loginRequest);
-
-    const { account } = result;
-
-    if (account) {
-      instance.setActiveAccount(account);
-    }
-  };
+  const account = useAccount();
 
   return (
     <>
@@ -56,14 +42,13 @@ export default function Header({
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {titleText}
             </Typography>
-            <AuthenticatedTemplate>
-              <AccountMenu />
-            </AuthenticatedTemplate>
-            <UnauthenticatedTemplate>
-              <Button color="inherit" onClick={handleLogin}>
+            {account ? (
+              <AvatarWithLogoutButton name={account.name} onLogout={() => {}} />
+            ) : (
+              <Button color="inherit" component={Link} to="/signin">
                 Login
               </Button>
-            </UnauthenticatedTemplate>
+            )}
           </Toolbar>
         </Container>
       </AppBar>

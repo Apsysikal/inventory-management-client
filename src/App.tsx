@@ -5,6 +5,7 @@ import { Items } from "./pages/Items";
 import { Checkin } from "./pages/Checkin";
 import { Checkout } from "./pages/Checkout";
 import { CreateItem } from "./pages/CreateItem";
+import { SignIn } from "./pages/SignIn";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Route path="/items/create" element={<CreateItem />} />
       <Route path="/items/checkin" element={<Checkin />} />
       <Route path="/items/checkout" element={<Checkout />} />
+      <Route path="/signin" element={<SignIn />} />
     </Routes>
   );
 }

@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 
 const CreateItem: React.FC<{
+  disableConfirm?: boolean;
   handleCancel: Function;
   handleConfirm: Function;
-}> = ({ handleCancel, handleConfirm }) => {
+}> = ({ disableConfirm, handleCancel, handleConfirm }) => {
   const [serial, setSerial] = useState("");
   const [description, setDescription] = useState("");
   const [count, setCount] = useState(0);
@@ -61,7 +62,7 @@ const CreateItem: React.FC<{
       <Grid item xs={12} sm={6}>
         <Button
           fullWidth
-          disabled={disableCreate()}
+          disabled={disableConfirm || disableCreate()}
           variant="contained"
           onClick={() => {
             handleConfirm({
