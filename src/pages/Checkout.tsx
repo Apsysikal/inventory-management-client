@@ -13,57 +13,27 @@ import { Loading } from "../components/molecules/Loading";
 import Header from "../components/Header/Header";
 
 import { useItems } from "../hooks/useItems";
-import { getItems, updateItem } from "../service/item";
 import { initializeCheckoutItems } from "../utils/initializeItems";
-import { getItemIndex, getCheckedItems } from "../utils/items";
-import {
-  handleItemCheckboxClick,
-  handleItemRemoveClick,
-  handleItemAddClick,
-} from "../utils/handleItemClick";
+import { getCheckedItems, updateItems } from "../utils/items";
 import { useAccount } from "../hooks/useAccount";
-
-import InventoryItem from "../types/InventoryItem";
+import {
+  useItemSelection,
+  ItemSelectionActionType,
+} from "../hooks/useItemSelection";
 
 const Checkout = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { loading, data, error } = useItems({ limit: 1000, query: "count:>0" });
-  const [items, setItems] = useState<InventoryItem[]>([]);
+  const [items, dispatchItems] = useItemSelection([]);
   const account = useAccount();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const initializedItems = initializeCheckoutItems(data ? data : []);
-
-    setItems([...initializedItems]);
-  }, [data]);
-
-  const onCheckbox = (item: InventoryItem) => {
-    const modifiedItems = [...items];
-    const modifiedItem = handleItemCheckboxClick(item);
-    const index = getItemIndex(modifiedItems, modifiedItem);
-
-    modifiedItems[index] = modifiedItem;
-    setItems([...modifiedItems]);
-  };
-
-  const onRemove = (item: InventoryItem) => {
-    const modifiedItems = [...items];
-    const modifiedItem = handleItemRemoveClick(item);
-    const index = getItemIndex(modifiedItems, modifiedItem);
-
-    modifiedItems[index] = modifiedItem;
-    setItems([...modifiedItems]);
-  };
-
-  const onAdd = (item: InventoryItem) => {
-    const modifiedItems = [...items];
-    const modifiedItem = handleItemAddClick(item);
-    const index = getItemIndex(modifiedItems, modifiedItem);
-
-    modifiedItems[index] = modifiedItem;
-    setItems([...modifiedItems]);
-  };
+    dispatchItems({
+      type: ItemSelectionActionType.INITIALIZE,
+      payload: initializeCheckoutItems(data ? data : []),
+    });
+  }, [data, dispatchItems]);
 
   const onCancel = () => {
     setDialogOpen(false);
@@ -71,28 +41,7 @@ const Checkout = () => {
 
   const onConfirm = async () => {
     if (!account) return;
-    const selectedItems = getCheckedItems(items);
-
-    await Promise.all(
-      selectedItems.map(async (item) => {
-        const { _id: id, serial, description, count } = item;
-
-        getItems({ query: `serial:${serial}` }).then(({ data }) => {
-          if (data.length <= 0) throw new Error("Item does not exist in db");
-
-          const modifiedCount = data[0].count - count;
-          return updateItem(
-            id,
-            { serial, description, count: modifiedCount },
-            {
-              headers: {
-                Authorization: `Bearer ${account.tokens.accessToken}`,
-              },
-            }
-          );
-        });
-      })
-    );
+    await updateItems(getCheckedItems(items), true);
 
     navigate("/");
   };
@@ -111,12 +60,7 @@ const Checkout = () => {
               <Loading />
             ) : (
               <Paper sx={{ maxHeight: "80vh", overflow: "auto" }}>
-                <ItemListWithControls
-                  items={items}
-                  onCheckbox={onCheckbox}
-                  onRemove={onRemove}
-                  onAdd={onAdd}
-                />
+                <ItemListWithControls items={items} dispatch={dispatchItems} />
               </Paper>
             )}
           </Grid>
