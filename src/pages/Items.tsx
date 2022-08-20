@@ -9,7 +9,7 @@ import { ItemList } from "../components/organisms/ItemList";
 import { useItems } from "../hooks/useItems";
 import { useAccount } from "../hooks/useAccount";
 
-import Header from "../components/Header/Header";
+import Header from "../components/organisms/Header";
 
 const Items = () => {
   const account = useAccount();

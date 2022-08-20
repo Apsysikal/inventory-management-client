@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Page } from "../components/templates/Page";
 import { CreateItem as CreateItemForm } from "../components/organisms/CreateItem";
-import Header from "../components/Header/Header";
+import Header from "../components/organisms/Header";
 import { useAccount } from "../hooks/useAccount";
 
 import { getItems, createItem } from "../service/item";

@@ -7,7 +7,7 @@ import { ItemListWithControls } from "../components/organisms/ItemListWithContro
 import { ConfirmDialog } from "../components/molecules/ConfirmDialog";
 import { Page } from "../components/templates/Page";
 import { Loading } from "../components/molecules/Loading";
-import Header from "../components/Header/Header";
+import Header from "../components/organisms/Header";
 import { useItems } from "../hooks/useItems";
 import { initializeCheckinItems } from "../utils/initializeItems";
 import { getCheckedItems, updateItems } from "../utils/items";

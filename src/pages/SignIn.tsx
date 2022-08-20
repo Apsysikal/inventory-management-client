@@ -2,7 +2,7 @@ import { Grid, Button } from "@mui/material";
 import { Google, Login } from "@mui/icons-material";
 
 import { Page } from "../components/templates/Page";
-import Header from "../components/Header/Header";
+import Header from "../components/organisms/Header";
 import { useAuthentication } from "../hooks/useAuth";
 
 const SignIn = () => {

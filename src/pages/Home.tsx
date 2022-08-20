@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Typography } from "@mui/material";
 
 import { Page } from "../components/templates/Page";
-import { MetaDisplay } from "../components/organisms/MetaDisplay";
 
-import Header from "../components/Header/Header";
+import Header from "../components/organisms/Header";
 import { useAccount } from "../hooks/useAccount";
 
 const Home = () => {
@@ -16,7 +15,13 @@ const Home = () => {
       <Page>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <MetaDisplay />
+            <Typography>
+              Welcome to the Inventory Management System. <br />
+              Manage your Items by navigating to the Items page via the button
+              below. <br />
+              If the item you want to manage does not exist, you can add it via
+              the create Item dialog.
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" component={Link} to="items" fullWidth>
