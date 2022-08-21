@@ -11,7 +11,7 @@ export interface IAccount {
 }
 
 export class AuthenticationClient {
-  private readonly BACKEND_URL = "http://localhost:3001";
+  private readonly BACKEND_URL = String(process.env.REACT_APP_BACKEND_URL) || "https://api.schniepp.ch";
 
   private instance: AxiosInstance;
   private accounts: IAccount[] = [];

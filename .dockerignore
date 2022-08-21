@@ -1,2 +1,8 @@
 node_modules
 npm-debug.log
+.devcontainer
+.github
+.vscode
+**/*.env
+.gitignore
+.jest.config.js
