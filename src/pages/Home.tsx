@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button, Typography, Paper } from "@mui/material";
 
 import { Page } from "../components/templates/Page";
+import { InventoryCard } from "../components/molecules/InventoryCard";
 
 import Header from "../components/organisms/Header";
 import { useAccount } from "../hooks/useAccount";
@@ -23,22 +24,40 @@ const Home = () => {
               the create Item dialog.
             </Typography>
           </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" component={Link} to="items" fullWidth>
-              Items
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              component={Link}
-              to="items/Create"
-              fullWidth
-              disabled={!account}
-            >
-              Create Item
-            </Button>
-          </Grid>
+          {account && (
+            <>
+              <Grid item xs={12}>
+                <Typography textAlign="center" style={{ margin: "1em" }}>
+                  Check out your lists.
+                </Typography>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  component={Link}
+                  to="/list"
+                >
+                  Lists
+                </Button>
+              </Grid>
+            </>
+          )}
+          {!account && (
+            <>
+              <Grid item xs={12}>
+                <Typography textAlign="center" style={{ margin: "1em" }}>
+                  Sign in to see available lists.
+                </Typography>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  component={Link}
+                  to="/signin"
+                >
+                  Sign In.
+                </Button>
+              </Grid>
+            </>
+          )}
         </Grid>
       </Page>
     </>

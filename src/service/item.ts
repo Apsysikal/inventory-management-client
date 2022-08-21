@@ -25,6 +25,7 @@ export type ItemResponse = {
 };
 
 export type FilterParams = {
+  list: string;
   limit?: number;
   skip?: number;
   query?: string;

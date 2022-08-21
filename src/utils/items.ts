@@ -20,7 +20,7 @@ async function updateItems(items: InventoryItem[], subtract: boolean = false) {
     items.map(async (item) => {
       const { _id: id, serial, description, count } = item;
 
-      getItems({ query: `serial:${serial}` }).then(({ data }) => {
+      getItems({ list: "", query: `serial:${serial}` }).then(({ data }) => {
         if (data.length <= 0) throw new Error("Item does not exist in db");
 
         const modifiedCount = subtract

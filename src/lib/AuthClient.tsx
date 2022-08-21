@@ -33,12 +33,13 @@ export class AuthenticationClient {
   };
 
   addAccount = (account: IAccount) => {
-    const { id } = account;
+    const { id, tokens } = account;
     const existingAccount = this.findAccountById(id);
 
     if (existingAccount) return existingAccount;
 
     console.debug(`Adding new account: ${id}`);
+    console.debug(`Access Token: ${tokens.accessToken}`);
     this.accounts.push(account);
     return this.setActiveAccount(account);
   };

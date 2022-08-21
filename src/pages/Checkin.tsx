@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Paper, Grid, Button } from "@mui/material";
 
 import { ItemList } from "../components/organisms/ItemList";
@@ -19,7 +19,11 @@ import {
 
 const Checkin = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { loading, data, error } = useItems({ limit: 1000 });
+  const { listId } = useParams();
+  const { loading, data, error } = useItems({
+    list: listId || "",
+    limit: 1000,
+  });
   const [items, dispatchItems] = useItemSelection([]);
   const account = useAccount();
   const navigate = useNavigate();

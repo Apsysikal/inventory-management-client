@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Page } from "../components/templates/Page";
 import { CreateItem as CreateItemForm } from "../components/organisms/CreateItem";
@@ -9,6 +9,7 @@ import { getItems, createItem } from "../service/item";
 
 const CreateItem = () => {
   const account = useAccount();
+  const { listId } = useParams();
   const navigate = useNavigate();
 
   const handleCancel = () => {
@@ -23,6 +24,7 @@ const CreateItem = () => {
     if (!account) return;
 
     const getResponse = await getItems({
+      list: listId || "",
       query: `serial:${item.serial}`,
       limit: 1,
     });

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { Grid, Button, Paper } from "@mui/material";
 
@@ -11,9 +11,10 @@ import { useAccount } from "../hooks/useAccount";
 
 import Header from "../components/organisms/Header";
 
-const Items = () => {
+const List = () => {
   const account = useAccount();
-  const { loading, data } = useItems({ list: "", limit: 1000 });
+  const { listId } = useParams();
+  const { loading, data } = useItems({ list: listId || "", limit: 1000 });
 
   return (
     <>
@@ -67,4 +68,4 @@ const Items = () => {
   );
 };
 
-export { Items };
+export { List };
