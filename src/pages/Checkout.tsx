@@ -48,7 +48,7 @@ const Checkout = () => {
     if (!account) return;
     await updateItems(getCheckedItems(items), true);
 
-    navigate("/");
+    navigate(-1);
   };
 
   if (error) {

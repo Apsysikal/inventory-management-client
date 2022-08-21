@@ -7,12 +7,14 @@ import { CreateItem } from "./pages/CreateItem";
 import { SignIn } from "./pages/SignIn";
 import { Lists } from "./pages/Lists";
 import { List } from "./pages/List";
+import { CreateList } from "./pages/CreateList";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/list" element={<Lists />} />
+      <Route path="/list/create-list" element={<CreateList />} />
       <Route path="/list/:listId" element={<List />} />
       <Route path="/list/:listId/create" element={<CreateItem />} />
       <Route path="/list/:listId/checkin" element={<Checkin />} />

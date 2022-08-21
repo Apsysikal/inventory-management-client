@@ -3,6 +3,7 @@ export default interface InventoryItem {
   serial: string;
   description: string;
   count: number;
+  list: string;
   checked?: boolean;
   maxCount?: number;
 }

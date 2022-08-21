@@ -13,6 +13,7 @@ export type ItemRequest = {
   serial: string;
   description: string;
   count: number;
+  list: string;
 };
 
 export type ItemResponse = {
@@ -22,6 +23,7 @@ export type ItemResponse = {
   serial: string;
   description: string;
   count: number;
+  list: string;
 };
 
 export type FilterParams = {

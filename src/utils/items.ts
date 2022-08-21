@@ -18,15 +18,21 @@ function getCheckedItems(items: InventoryItem[]) {
 async function updateItems(items: InventoryItem[], subtract: boolean = false) {
   await Promise.all(
     items.map(async (item) => {
-      const { _id: id, serial, description, count } = item;
+      const { _id: id, serial, description, count, list } = item;
 
-      getItems({ list: "", query: `serial:${serial}` }).then(({ data }) => {
+      getItems({ list, query: `serial:${serial}` }).then(({ data }) => {
         if (data.length <= 0) throw new Error("Item does not exist in db");
 
         const modifiedCount = subtract
           ? data[0].count - count
           : data[0].count + count;
-        return updateItem(id, { serial, description, count: modifiedCount });
+
+        return updateItem(id, {
+          serial,
+          description,
+          count: modifiedCount,
+          list,
+        });
       });
     })
   );

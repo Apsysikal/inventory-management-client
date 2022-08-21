@@ -44,7 +44,7 @@ const Lists = () => {
                   <Grid item xs={12}>
                     <InventoryCard
                       inventory={{
-                        id: list.id,
+                        id: list._id,
                         title: list.title,
                         description: list.description,
                       }}
@@ -53,6 +53,16 @@ const Lists = () => {
                   </Grid>
                 );
               })}
+              <Grid item xs={12}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  component={Link}
+                  to="create-list"
+                >
+                  Create List
+                </Button>
+              </Grid>
             </>
           )}
           {!account && (

@@ -41,10 +41,11 @@ const Checkin = () => {
 
   const onConfirm = async () => {
     if (!account) return; // Return when no user is signed in
+    if (!listId) return;
 
     await updateItems(getCheckedItems(items));
 
-    navigate("/");
+    navigate(-1);
   };
 
   if (error) {

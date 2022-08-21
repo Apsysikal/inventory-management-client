@@ -1,5 +1,5 @@
 export type InventoryList = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   owner: InventoryListAccount;
@@ -7,8 +7,8 @@ export type InventoryList = {
 };
 
 export type InventoryListAccount = {
-  id: string;
-  name: string;
+  _id: string;
+  displayName: string;
 };
 
 export type CreateInventoryList = Pick<InventoryList, "title" | "description">;

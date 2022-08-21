@@ -22,16 +22,20 @@ const CreateItem = () => {
     count: number;
   }) => {
     if (!account) return;
+    if (!listId) return;
 
     const getResponse = await getItems({
-      list: listId || "",
+      list: listId,
       query: `serial:${item.serial}`,
       limit: 1,
     });
 
     if (getResponse.data.length > 0) throw new Error("Item already exists");
 
-    const postResponse = await createItem(item, {
+    const modifiedItem = { ...item, list: listId };
+    console.debug(modifiedItem);
+
+    const postResponse = await createItem(modifiedItem, {
       headers: {
         Authorization: `Bearer ${account.tokens.accessToken}`,
       },
@@ -39,7 +43,7 @@ const CreateItem = () => {
 
     if (postResponse.status === 201) {
       console.log("Item created");
-      navigate("/");
+      navigate(-1);
     } else {
       throw new Error("Failed to create item");
     }

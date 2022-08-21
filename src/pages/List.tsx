@@ -54,6 +54,17 @@ const List = () => {
           </Grid>
           <Grid item xs={12}>
             <Button
+              variant="contained"
+              component={Link}
+              to="create"
+              fullWidth
+              disabled={!account}
+            >
+              Create Item
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
               variant="outlined"
               component={Link}
               to={-1 as any}
