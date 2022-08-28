@@ -45,7 +45,7 @@ const Checkin = () => {
 
     await updateItems(getCheckedItems(items));
 
-    navigate(-1);
+    navigate(-1 as any);
   };
 
   if (error) {

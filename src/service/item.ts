@@ -33,7 +33,7 @@ export type FilterParams = {
   query?: string;
 };
 
-function getItems(params?: FilterParams, config?: AxiosRequestConfig) {
+async function getItems(params?: FilterParams, config?: AxiosRequestConfig) {
   return api.get<ItemResponse[]>({
     ...config,
     params,
@@ -59,7 +59,7 @@ function createItems(data: ItemRequest[], config?: AxiosRequestConfig) {
   });
 }
 
-function updateItem(
+async function updateItem(
   id: string,
   data: ItemRequest,
   config?: AxiosRequestConfig
