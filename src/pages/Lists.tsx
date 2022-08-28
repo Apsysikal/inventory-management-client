@@ -41,7 +41,7 @@ const Lists = () => {
             <>
               {lists.map((list) => {
                 return (
-                  <Grid item xs={12}>
+                  <Grid item xs={12} key={list._id}>
                     <InventoryCard
                       inventory={{
                         id: list._id,
