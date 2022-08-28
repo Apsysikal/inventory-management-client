@@ -24,11 +24,18 @@ const CreateItem = () => {
     if (!account) return;
     if (!listId) return;
 
-    const getResponse = await getItems({
-      list: listId,
-      query: `serial:${item.serial}`,
-      limit: 1,
-    });
+    const getResponse = await getItems(
+      {
+        list: listId,
+        query: `serial:${item.serial}`,
+        limit: 1,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${account?.tokens.accessToken}`,
+        },
+      }
+    );
 
     if (getResponse.data.length > 0) throw new Error("Item already exists");
 

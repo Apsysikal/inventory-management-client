@@ -14,7 +14,14 @@ import Header from "../components/organisms/Header";
 const List = () => {
   const account = useAccount();
   const { listId } = useParams();
-  const { loading, data } = useItems({ list: listId || "", limit: 1000 });
+  const { loading, data } = useItems(
+    { list: listId || "", limit: 1000 },
+    {
+      headers: {
+        Authorization: `Bearer ${account?.tokens.accessToken}`,
+      },
+    }
+  );
 
   return (
     <>

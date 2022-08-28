@@ -18,15 +18,22 @@ import {
 } from "../hooks/useItemSelection";
 
 const Checkin = () => {
-  const [dialogOpen, setDialogOpen] = useState(false);
   const { listId } = useParams();
-  const { loading, data, error } = useItems({
-    list: listId || "",
-    limit: 1000,
-  });
-  const [items, dispatchItems] = useItemSelection([]);
   const account = useAccount();
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { loading, data, error } = useItems(
+    {
+      list: listId || "",
+      limit: 1000,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${account?.tokens.accessToken}`,
+      },
+    }
+  );
+  const [items, dispatchItems] = useItemSelection([]);
 
   useEffect(() => {
     dispatchItems({
@@ -43,7 +50,7 @@ const Checkin = () => {
     if (!account) return; // Return when no user is signed in
     if (!listId) return;
 
-    await updateItems(getCheckedItems(items));
+    await updateItems(account.tokens.accessToken, getCheckedItems(items));
 
     navigate(-1 as any);
   };

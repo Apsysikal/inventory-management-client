@@ -22,16 +22,23 @@ import {
 } from "../hooks/useItemSelection";
 
 const Checkout = () => {
-  const [dialogOpen, setDialogOpen] = useState(false);
   const { listId } = useParams();
-  const { loading, data, error } = useItems({
-    list: listId || "",
-    limit: 1000,
-    query: "count:>0",
-  });
-  const [items, dispatchItems] = useItemSelection([]);
   const account = useAccount();
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { loading, data, error } = useItems(
+    {
+      list: listId || "",
+      limit: 1000,
+      query: "count:>0",
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${account?.tokens.accessToken}`,
+      },
+    }
+  );
+  const [items, dispatchItems] = useItemSelection([]);
 
   useEffect(() => {
     dispatchItems({
@@ -46,7 +53,7 @@ const Checkout = () => {
 
   const onConfirm = async () => {
     if (!account) return;
-    await updateItems(getCheckedItems(items), true);
+    await updateItems(account.tokens.accessToken, getCheckedItems(items), true);
 
     navigate(-1);
   };

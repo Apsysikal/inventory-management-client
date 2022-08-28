@@ -15,24 +15,43 @@ function getCheckedItems(items: InventoryItem[]) {
   });
 }
 
-async function updateItems(items: InventoryItem[], subtract: boolean = false) {
+async function updateItems(
+  accessToken: string,
+  items: InventoryItem[],
+  subtract: boolean = false
+) {
   await Promise.all(
     items.map(async (item) => {
       const { _id: id, serial, description, count, list } = item;
 
-      return getItems({ list, query: `serial:${serial}` }).then(({ data }) => {
+      return getItems(
+        { list, query: `serial:${serial}` },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ).then(({ data }) => {
         if (data.length <= 0) throw new Error("Item does not exist in db");
 
         const modifiedCount = subtract
           ? data[0].count - count
           : data[0].count + count;
 
-        return updateItem(id, {
-          serial,
-          description,
-          count: modifiedCount,
-          list,
-        });
+        return updateItem(
+          id,
+          {
+            serial,
+            description,
+            count: modifiedCount,
+            list,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
       });
     })
   );
