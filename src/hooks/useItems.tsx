@@ -7,7 +7,7 @@ import InventoryItem from "../types/InventoryItem";
 
 function useItems(params?: FilterParams, config?: AxiosRequestConfig) {
   const [data, setData] = useState<InventoryItem[]>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
