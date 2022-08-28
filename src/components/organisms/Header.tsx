@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Link as MaterialLink } from "@mui/material";
 import { Breakpoint } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -28,9 +28,16 @@ export default function Header({
       <AppBar position="static" sx={sx}>
         <Container maxWidth={maxWidth}>
           <Toolbar style={{ maxWidth: maxWidth }}>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <MaterialLink
+              variant="h6"
+              component={Link}
+              sx={{ flexGrow: 1 }}
+              color="inherit"
+              underline="none"
+              to="/"
+            >
               {titleText}
-            </Typography>
+            </MaterialLink>
             {account ? (
               <AvatarWithLogoutButton name={account.name} onLogout={() => {}} />
             ) : (
