@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { Grid, Button, Typography, Paper } from "@mui/material";
+import { Grid, Button, Typography } from "@mui/material";
 
 import { Page } from "../components/templates/Page";
-import { InventoryCard } from "../components/molecules/InventoryCard";
 
 import Header from "../components/organisms/Header";
 import { useAccount } from "../hooks/useAccount";
@@ -16,7 +15,7 @@ const Home = () => {
       <Page>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Typography>
+            <Typography textAlign="center">
               Welcome to the Inventory Management System. <br />
               Manage your Items by navigating to the Items page via the button
               below. <br />
